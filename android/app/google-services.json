@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "230905530690",
+    "project_id": "flutter-personel",
+    "storage_bucket": "flutter-personel.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:230905530690:android:53cc9351e76b3b41c8a0db",
+        "android_client_info": {
+          "package_name": "com.example.personel_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "230905530690-8c5lfajiehj2eb8a9ek6l5uee75ugmbo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDwSfph2OrcCd57S3sZBj2TMFO4WAmYE1A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "230905530690-8c5lfajiehj2eb8a9ek6l5uee75ugmbo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
