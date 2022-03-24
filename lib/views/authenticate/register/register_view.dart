@@ -5,12 +5,12 @@ import 'package:personel_app/core/extension/responsive.dart';
 import 'package:personel_app/core/extension/string_constant.dart';
 import 'package:personel_app/services/authenticate_service.dart';
 import 'package:personel_app/views/authenticate/login/login_view.dart';
-import 'package:personel_app/views/home/home_view.dart';
+import 'package:personel_app/views/bottom_navigaton_bar/bottom_navigation_bar.dart';
 
 import 'package:provider/provider.dart';
 
 class RegisterView extends StatefulWidget {
-  static String routeName = StringConstants.instance.register;
+  static String routeName = StringConstants.instance.registerview;
   const RegisterView({Key? key}) : super(key: key);
 
   @override
@@ -109,7 +109,8 @@ class _RegisterViewState extends State<RegisterView> {
                             .then(
                           (value) {
                             if (value?.emailVerified != null) {
-                              Navigator.pushNamed(context, HomeView.routeName);
+                              Navigator.pushReplacementNamed(
+                                  context, BottomNavigationView.routeName);
                             } else {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
@@ -121,7 +122,7 @@ class _RegisterViewState extends State<RegisterView> {
                         );
                       },
                       child: Text(
-                        StringConstants.instance.login,
+                        StringConstants.instance.register,
                       ),
                       style: ElevatedButton.styleFrom(
                         primary: blueColor,

@@ -5,7 +5,7 @@ import 'package:personel_app/core/extension/responsive.dart';
 import 'package:personel_app/core/extension/string_constant.dart';
 import 'package:personel_app/services/authenticate_service.dart';
 import 'package:personel_app/views/authenticate/register/register_view.dart';
-import 'package:personel_app/views/home/home_view.dart';
+import 'package:personel_app/views/bottom_navigaton_bar/bottom_navigation_bar.dart';
 import 'package:provider/provider.dart';
 
 class LoginView extends StatefulWidget {
@@ -111,8 +111,8 @@ class _LoginViewState extends State<LoginView> {
                               .then(
                             (value) {
                               if (value?.emailVerified != null) {
-                                Navigator.pushNamed(
-                                    context, HomeView.routeName);
+                                Navigator.pushReplacementNamed(
+                                    context, BottomNavigationView.routeName);
                               } else {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
@@ -151,6 +151,27 @@ class _LoginViewState extends State<LoginView> {
                       },
                       child: Text(
                         StringConstants.instance.register,
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        primary: blueColor,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        textStyle:
+                            const TextStyle(color: whiteColor, fontSize: 20),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 15),
+                  Container(
+                    decoration:
+                        BoxDecoration(borderRadius: BorderRadius.circular(20)),
+                    height: SizeConfig.screenHeight * .07,
+                    width: SizeConfig.screenWidth * .6,
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      child: const Text(
+                        'Google ile giriş',
                       ),
                       style: ElevatedButton.styleFrom(
                         primary: blueColor,
