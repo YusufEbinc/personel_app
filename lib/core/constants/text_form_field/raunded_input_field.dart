@@ -5,7 +5,7 @@ class RoundedInputField extends StatelessWidget {
   final Color backroundColor;
   final Color? fillColor;
   final double? width;
-  final double? radius;
+  final double radius;
   final double? height;
   final IconData? icon;
   final double iconSize;
@@ -30,7 +30,7 @@ class RoundedInputField extends StatelessWidget {
     this.iconColor,
     this.width,
     this.height,
-    this.radius,
+    required this.radius,
     this.inputType,
     this.controller,
     this.suffixIcon,
@@ -39,8 +39,8 @@ class RoundedInputField extends StatelessWidget {
     this.iconSize = 20,
     required this.hintText,
     this.obscureText = false,
-    required this.suffixClick,
-    required this.prefixClick,
+    this.suffixClick,
+    this.prefixClick,
     this.obscuringCharacter = "*",
     this.validator,
     this.fillColor,
@@ -55,7 +55,15 @@ class RoundedInputField extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 15),
       decoration: BoxDecoration(
         color: backroundColor,
-        borderRadius: BorderRadius.circular(radius!),
+        borderRadius: BorderRadius.circular(radius),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.5),
+            spreadRadius: 5,
+            blurRadius: 7,
+            offset: Offset(0, 3), // changes position of shadow
+          ),
+        ],
       ),
       child: Center(
         child: TextFormField(

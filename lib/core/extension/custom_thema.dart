@@ -24,7 +24,7 @@ AppBarTheme appBarTheme() {
     elevation: 2,
     color: whiteColor,
     centerTitle: true,
-    titleTextStyle: TextStyle(color: blackColor),
+    titleTextStyle: TextStyle(color: blackColor, fontSize: 20),
     iconTheme: IconThemeData(color: blackColor),
   );
 }

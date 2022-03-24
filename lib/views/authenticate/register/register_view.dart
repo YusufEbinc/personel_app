@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:personel_app/core/constants/button/default_button.dart';
 import 'package:personel_app/core/constants/text_form_field/raunded_input_field.dart';
 import 'package:personel_app/core/extension/color.dart';
 import 'package:personel_app/core/extension/responsive.dart';
@@ -95,67 +96,47 @@ class _RegisterViewState extends State<RegisterView> {
                         }
                       },
                       icon: Icons.visibility),
-                  const SizedBox(height: 15.0),
-                  Container(
-                    decoration:
-                        BoxDecoration(borderRadius: BorderRadius.circular(20)),
+                  const SizedBox(height: 15),
+                  DefaultButton(
                     height: SizeConfig.screenHeight * .07,
                     width: SizeConfig.screenWidth * .6,
-                    child: ElevatedButton(
-                      onPressed: () async {
-                        await provider
-                            .createUser(
-                                emailController.text, passwordController.text)
-                            .then(
-                          (value) {
-                            if (value?.emailVerified != null) {
-                              Navigator.pushReplacementNamed(
-                                  context, BottomNavigationView.routeName);
-                            } else {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text(provider.error),
-                                ),
-                              );
-                            }
-                          },
-                        );
-                      },
-                      child: Text(
-                        StringConstants.instance.register,
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        primary: blueColor,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        textStyle:
-                            const TextStyle(color: whiteColor, fontSize: 20),
-                      ),
-                    ),
+                    buttonColor: blueColor,
+                    radius: 20,
+                    text: StringConstants.instance.register,
+                    buttonTextColor: blackColor,
+                    buttonTextFontSize: 20,
+                    press: () async {
+                      await provider
+                          .createUser(
+                              emailController.text, passwordController.text)
+                          .then(
+                        (value) {
+                          if (value?.emailVerified != null) {
+                            Navigator.pushReplacementNamed(
+                                context, BottomNavigationView.routeName);
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(provider.error),
+                              ),
+                            );
+                          }
+                        },
+                      );
+                    },
                   ),
                   const SizedBox(height: 15),
-                  Container(
-                    decoration:
-                        BoxDecoration(borderRadius: BorderRadius.circular(20)),
+                  DefaultButton(
                     height: SizeConfig.screenHeight * .07,
                     width: SizeConfig.screenWidth * .6,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.pushNamed(context, LoginView.routeName);
-                      },
-                      child: Text(
-                        StringConstants.instance.login,
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        primary: blueColor,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        textStyle:
-                            const TextStyle(color: whiteColor, fontSize: 20),
-                      ),
-                    ),
+                    buttonColor: blueColor,
+                    radius: 20,
+                    text: StringConstants.instance.login,
+                    buttonTextColor: blackColor,
+                    buttonTextFontSize: 20,
+                    press: () {
+                      Navigator.pushNamed(context, LoginView.routeName);
+                    },
                   ),
                 ],
               ),

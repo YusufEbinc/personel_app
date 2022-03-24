@@ -37,7 +37,7 @@ class _BottomNavigationViewState extends State<BottomNavigationView> {
                   icon: Icon(
                     Icons.favorite,
                     size: 25,
-                    color: selectedIndex == 0 ? blackColor : iconColor,
+                    color: selectedIndex == 0 ? blackColor : greyColor,
                   )),
               IconButton(
                   onPressed: () {
@@ -48,7 +48,7 @@ class _BottomNavigationViewState extends State<BottomNavigationView> {
                   icon: Icon(
                     Icons.home,
                     size: 25,
-                    color: selectedIndex == 1 ? blackColor : iconColor,
+                    color: selectedIndex == 1 ? blackColor : greyColor,
                   )),
               IconButton(
                   onPressed: () {
@@ -59,7 +59,7 @@ class _BottomNavigationViewState extends State<BottomNavigationView> {
                   icon: Icon(
                     Icons.settings,
                     size: 25,
-                    color: selectedIndex == 2 ? blackColor : iconColor,
+                    color: selectedIndex == 2 ? blackColor : greyColor,
                   )),
             ],
           ),

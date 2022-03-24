@@ -18,8 +18,15 @@ class StringConstants {
   String home = 'Home';
   String register = 'Register';
 
+  String expenses = 'Expenses';
+  String date = 'Date';
+  String price = 'Price';
+  String payment = 'Payment';
+  String addData = 'Add Data ';
+
   String errorValue = 'error';
   String password = 'password';
+  String save = 'Save';
   String email = 'email';
   String logout = 'Log Out';
 }
