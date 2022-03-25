@@ -1,8 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:personel_app/core/extension/custom_thema.dart';
 import 'package:personel_app/core/extension/route.dart';
 import 'package:personel_app/services/authenticate_service.dart';
+import 'package:personel_app/services/firebase_service.dart';
 import 'package:personel_app/views/authenticate/splash/splas_view.dart';
 import 'package:provider/provider.dart';
 
@@ -20,10 +22,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        //  StreamProvider<User>.value(value: AuthService().user, )
+        ChangeNotifierProvider(
+          create: (context) => FirebaseService(),
+        ),
         Provider(
           create: ((context) => AuthService()),
-        )
+        ),
+        //  StreamProvider.value(value: value, initialData: initialData)
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
