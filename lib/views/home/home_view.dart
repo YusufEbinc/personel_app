@@ -3,8 +3,10 @@ import 'package:personel_app/core/constants/text_form_field/raunded_input_field.
 import 'package:personel_app/core/extension/color.dart';
 import 'package:personel_app/core/extension/responsive.dart';
 import 'package:personel_app/core/extension/string_constant.dart';
-import 'package:personel_app/services/authenticate_service.dart';
+import 'package:personel_app/model/users_data_model.dart';
+import 'package:personel_app/views/user_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
 
 class HomeView extends StatefulWidget {
   static String routeName = StringConstants.instance.homeView;
@@ -15,24 +17,38 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
+  final formKey = GlobalKey<FormState>();
+  TextEditingController expensesController = TextEditingController();
+  TextEditingController paymenttypeController = TextEditingController();
+  TextEditingController priceController = TextEditingController();
+  TextEditingController dateController = TextEditingController();
+  late UsersData users;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-    final provider = Provider.of<AuthService>(context);
+    final provider = Provider.of<UserProvider>(context);
     return Scaffold(
-        appBar: AppBar(
-          title: Text(StringConstants.instance.home),
-        ),
-        body: Center(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15),
-            child: Container(
-              height: SizeConfig.screenHeight * .55,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12), color: whiteColor),
-              child: SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.all(20),
+      appBar: AppBar(
+        title: Text(StringConstants.instance.home),
+      ),
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15),
+          child: Container(
+            height: SizeConfig.screenHeight * .55,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12), color: whiteColor),
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(20),
+                child: Form(
+                  key: formKey,
                   child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -64,15 +80,16 @@ class _HomeViewState extends State<HomeView> {
                           height: 20,
                         ),
                         RoundedInputField(
-                          // controller: emailController,
+                          controller: expensesController,
                           radius: 12,
                           height: SizeConfig.screenHeight * .07,
                           hintText: StringConstants.instance.expenses,
+                          inputType: TextInputType.name,
                           backroundColor: whiteColor,
                           validator: (value) {
-                            if (value!.length < 3 || !value.contains('@')) {
+                            if (value!.length < 3) {
                               return StringConstants
-                                  .instance.pleaseEnterValidEmail;
+                                  .instance.pleaseEnterValidValue;
                             } else {
                               return null;
                             }
@@ -80,44 +97,69 @@ class _HomeViewState extends State<HomeView> {
                         ),
                         RoundedInputField(
                           height: SizeConfig.screenHeight * .07,
-                          // controller: emailController,
+                          controller: paymenttypeController,
                           radius: 12,
                           hintText: StringConstants.instance.payment,
+                          inputType: TextInputType.name,
                           backroundColor: whiteColor,
                           validator: (value) {
-                            if (value!.length < 3 || !value.contains('@')) {
+                            if (value!.length < 3) {
                               return StringConstants
-                                  .instance.pleaseEnterValidEmail;
+                                  .instance.pleaseEnterValidValue;
                             } else {
                               return null;
                             }
                           },
                         ),
                         RoundedInputField(
-                          // controller: emailController,
+                          controller: priceController,
                           radius: 12,
                           height: SizeConfig.screenHeight * .07,
                           hintText: StringConstants.instance.price,
+                          inputType: TextInputType.number,
                           backroundColor: whiteColor,
                           validator: (value) {
-                            if (value!.length < 3 || !value.contains('@')) {
+                            if (value!.isEmpty) {
                               return StringConstants
-                                  .instance.pleaseEnterValidEmail;
+                                  .instance.pleaseEnterValidValue;
                             } else {
                               return null;
                             }
                           },
                         ),
                         RoundedInputField(
-                          // controller: emailController,
+                          icon: Icons.calendar_today,
+                          ontap: () async {
+                            DateTime? pickedDate = await showDatePicker(
+                                context: context,
+                                initialDate: DateTime.now(),
+                                firstDate: DateTime(2000),
+                                lastDate: DateTime(2101));
+                            if (pickedDate != null) {
+                              String formattedDate =
+                                  DateFormat('yyyy-MM-dd').format(pickedDate);
+                              setState(() {
+                                dateController.text = formattedDate;
+                              });
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(StringConstants
+                                      .instance.pleaseSelectDate),
+                                ),
+                              );
+                            }
+                          },
+                          controller: dateController,
                           radius: 12,
                           height: SizeConfig.screenHeight * .07,
                           hintText: StringConstants.instance.date,
+                          inputType: TextInputType.datetime,
                           backroundColor: whiteColor,
                           validator: (value) {
-                            if (value!.length < 3 || !value.contains('@')) {
+                            if (value!.isEmpty) {
                               return StringConstants
-                                  .instance.pleaseEnterValidEmail;
+                                  .instance.pleaseEnterValidValue;
                             } else {
                               return null;
                             }
@@ -129,14 +171,36 @@ class _HomeViewState extends State<HomeView> {
             ),
           ),
         ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {},
-          backgroundColor: whiteColor,
-          child: const Icon(
-            Icons.check,
-            color: blackColor,
-            size: 25,
-          ),
-        ));
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          if (formKey.currentState!.validate()) {
+            users = UsersData(
+              expenses: expensesController.text,
+              price: int.parse(priceController.text),
+              paymentType: paymenttypeController.text,
+              date: DateTime.parse(dateController.text),
+            );
+            provider.addData(users);
+
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(StringConstants.instance.registrationSuccessful),
+              ),
+            );
+            expensesController.clear();
+            paymenttypeController.clear();
+            priceController.clear();
+            dateController.clear();
+          }
+        },
+        backgroundColor: whiteColor,
+        child: const Icon(
+          Icons.check,
+          color: blackColor,
+          size: 25,
+        ),
+      ),
+    );
   }
 }

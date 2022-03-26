@@ -15,11 +15,11 @@ class BottomNavigationView extends StatefulWidget {
 
 class _BottomNavigationViewState extends State<BottomNavigationView> {
   List page = [
-    const HomeDetailView(),
     const HomeView(),
+    const HomeDetailView(),
     const SettingsView(),
   ];
-  int selectedIndex = 1;
+  int selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,7 +35,7 @@ class _BottomNavigationViewState extends State<BottomNavigationView> {
                     });
                   },
                   icon: Icon(
-                    Icons.favorite,
+                    Icons.home,
                     size: 25,
                     color: selectedIndex == 0 ? blackColor : greyColor,
                   )),
@@ -46,7 +46,7 @@ class _BottomNavigationViewState extends State<BottomNavigationView> {
                     });
                   },
                   icon: Icon(
-                    Icons.home,
+                    Icons.favorite,
                     size: 25,
                     color: selectedIndex == 1 ? blackColor : greyColor,
                   )),

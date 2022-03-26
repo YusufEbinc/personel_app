@@ -11,12 +11,17 @@ class StringConstants {
   String registerview = '/Register';
 
   String successfulLogin = 'Successful Login';
+  String registrationSuccessful = 'Registration Successful';
   String pleaseEnterValidEmail = 'Please enter a valid email ';
   String pleaseEnterValidPassword = 'Please enter a valid password';
+  String pleaseEnterValidValue = 'Please enter a valid value';
+  String pleaseSelectDate = 'Please select a date';
 
   String login = 'Login';
-  String home = 'Home';
+  String home = 'Home Page';
+  String homeDetail = 'Home Page Detail ';
   String register = 'Register';
+  String settings = 'Settings';
 
   String expenses = 'Expenses';
   String date = 'Date';

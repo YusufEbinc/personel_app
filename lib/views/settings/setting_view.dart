@@ -14,16 +14,17 @@ class SettingsView extends StatefulWidget {
 class _SettingsViewState extends State<SettingsView> {
   @override
   Widget build(BuildContext context) {
+    late int? index = 0;
     final provider = Provider.of<AuthService>(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text(StringConstants.instance.home),
+        title: Text(StringConstants.instance.settings),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          const Center(child: Text('Home')),
+          Center(child: Text(StringConstants.instance.settings)),
           ElevatedButton(
               onPressed: () {
                 provider.signOut();

@@ -5,26 +5,22 @@ ThemeData theme() {
   return ThemeData(
     fontFamily: "primaryFont",
     scaffoldBackgroundColor: scafoldbackclr,
-    textTheme: const TextTheme(
-        bodyText1: TextStyle(color: greyColor, fontSize: 15),
-        bodyText2: TextStyle(color: greyColor, fontSize: 15),
-        subtitle1: TextStyle(color: greyColor, fontSize: 15),
-        subtitle2: TextStyle(color: greyColor, fontSize: 15),
-        button: TextStyle(color: greyColor, fontSize: 15)),
-    //   primaryColor: whiteColor,
+    textTheme: TextTheme(
+      bodyText1: TextStyle(color: blackColor.withOpacity(.7), fontSize: 15),
+    ),
     appBarTheme: appBarTheme(),
-    toggleableActiveColor: greyColor,
-    unselectedWidgetColor: greyColor,
+    toggleableActiveColor: blackColor,
+    unselectedWidgetColor: blackColor,
     visualDensity: VisualDensity.adaptivePlatformDensity,
   );
 }
 
 AppBarTheme appBarTheme() {
-  return const AppBarTheme(
+  return AppBarTheme(
     elevation: 2,
     color: whiteColor,
     centerTitle: true,
-    titleTextStyle: TextStyle(color: blackColor, fontSize: 20),
-    iconTheme: IconThemeData(color: blackColor),
+    titleTextStyle: TextStyle(color: blackColor.withOpacity(.8), fontSize: 20),
+    iconTheme: const IconThemeData(color: blackColor, size: 30),
   );
 }

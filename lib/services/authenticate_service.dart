@@ -1,23 +1,23 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
+import 'package:personel_app/model/user_model.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   String error = '';
 
-  User? _userFirebase(User? user) {
+  UserModel? _userFirebase(User? user) {
     if (user == null) {
       return null;
     }
-    return user;
+    return UserModel(user.email, user.uid);
   }
 
-  Stream<User?> get user {
+  Stream<UserModel?> get user {
     return _auth.authStateChanges().map(_userFirebase);
   }
 
-  Future<User?> signInUser(String email, String password) async {
+  Future<UserModel?> signInUser(String email, String password) async {
     try {
       UserCredential userCredential = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
@@ -31,7 +31,7 @@ class AuthService {
     }
   }
 
-  Future<User?> createUser(String email, String password) async {
+  Future<UserModel?> createUser(String email, String password) async {
     try {
       UserCredential userCredential = await _auth
           .createUserWithEmailAndPassword(email: email, password: password);
