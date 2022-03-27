@@ -34,5 +34,8 @@ class StringConstants {
   String password = 'password';
   String save = 'Save';
   String email = 'email';
+  String signin = 'Sign in';
+  String signup = 'Sign up';
+  String withGoogle = 'with Google';
   String logout = 'Log Out';
 }

@@ -37,13 +37,14 @@ class _HomeViewState extends State<HomeView> {
             title: Text(StringConstants.instance.home),
           ),
           body: Center(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15),
-              child: Container(
-                height: SizeConfig.screenHeight * .55,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12), color: whiteColor),
-                child: SingleChildScrollView(
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15),
+                child: Container(
+                  height: SizeConfig.screenHeight * .6,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      color: whiteColor),
                   child: Padding(
                     padding: const EdgeInsets.all(20),
                     child: Form(

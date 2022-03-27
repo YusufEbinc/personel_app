@@ -26,73 +26,84 @@ class HomeDetailView extends StatelessWidget {
                   icon: const Icon(Icons.expand_more))
             ],
           ),
-          body: ListView.builder(
-            itemCount: provider.list.length,
-            itemBuilder: (context, index) {
-              return Padding(
-                padding: const EdgeInsets.all(10),
-                child: Container(
-                  padding: const EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                      color: whiteColor,
-                      borderRadius: BorderRadius.circular(13)),
-                  child: ListTile(
-                    leading: CircleAvatar(
-                        backgroundColor: scafoldbackclr,
-                        child: Text(
-                          (index + 1).toString(),
-                          style: const TextStyle(color: whiteColor),
-                        )),
-                    title: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(4.0),
-                          child: Text(
-                            ' Price: ' + provider.list[index].price.toString(),
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                            ),
+          body: provider.isloading
+              ? const Center(
+                  child: CircularProgressIndicator(),
+                )
+              : ListView.builder(
+                  itemCount: provider.list.length,
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: Container(
+                        padding: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                            color: whiteColor,
+                            borderRadius: BorderRadius.circular(13)),
+                        child: ListTile(
+                          leading: CircleAvatar(
+                              backgroundColor: scafoldbackclr,
+                              child: Text(
+                                (index + 1).toString(),
+                                style: const TextStyle(color: whiteColor),
+                              )),
+                          title: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(4.0),
+                                child: Text(
+                                  ' Price: ' +
+                                      provider.list[index].price.toString(),
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(4.0),
+                                child: Text(
+                                  ' Expenses: ' +
+                                      provider.list[index].expenses.toString(),
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(4.0),
+                                child: Text(
+                                  ' Payment : ' +
+                                      provider.list[index].paymentType
+                                          .toString(),
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(4.0),
+                                child: Text(
+                                  ' Price: ' +
+                                      DateFormat('yyyy-MM-dd')
+                                          .format(provider.list[index].date!),
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                              /*  IconButton(
+                                  onPressed: () {
+                                    provider.delete(provider.list[index]);
+                                  },
+                                  icon: const Icon(Icons.delete)) */
+                            ],
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(4.0),
-                          child: Text(
-                            ' Expenses: ' +
-                                provider.list[index].expenses.toString(),
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(4.0),
-                          child: Text(
-                            ' Payment : ' +
-                                provider.list[index].paymentType.toString(),
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(4.0),
-                          child: Text(
-                            ' Price: ' +
-                                DateFormat('yyyy-MM-dd')
-                                    .format(provider.list[index].date!),
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                      ),
+                    );
+                  },
                 ),
-              );
-            },
-          ),
         ),
       ),
     );

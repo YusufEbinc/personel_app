@@ -46,32 +46,30 @@ class AuthService {
       } else if (e.code == 'email-already-in-use') {
         error = 'The account already exists for that email.';
       }
-      throw Exception();
     }
   }
 
-  Future<UserCredential> signInWithGoogle() async {
+  Future<UserCredential?> signInWithGoogle() async {
     try {
       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
       final GoogleSignInAuthentication? googleAuth =
           await googleUser?.authentication;
 
-      final userCredential = GoogleAuthProvider.credential(
-        accessToken: googleAuth?.accessToken,
-        idToken: googleAuth?.idToken,
-      );
-      await _firebaseFirestore
-          .collection('users')
-          .doc(userCredential.accessToken)
-          .set({
-        'email': userCredential.accessToken,
-        'uid': userCredential.idToken
-      });
-      return await FirebaseAuth.instance.signInWithCredential(userCredential);
+      if (googleAuth?.accessToken != null && googleAuth?.idToken != null) {
+        final userCredential = GoogleAuthProvider?.credential(
+          accessToken: googleAuth?.accessToken,
+          idToken: googleAuth?.idToken,
+        );
+        await _firebaseFirestore
+            .collection('users')
+            .doc(googleUser?.email)
+            .set({'email': googleUser?.email, 'uid': googleUser?.id});
+        return await FirebaseAuth.instance.signInWithCredential(userCredential);
+      }
     } on FirebaseAuthException catch (e) {
       debugPrint(e.toString());
-      throw Exception();
+      throw FirebaseAuthException(code: 'auth');
     }
   }
 

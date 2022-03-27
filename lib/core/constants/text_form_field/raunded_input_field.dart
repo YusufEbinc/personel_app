@@ -50,55 +50,51 @@ class RoundedInputField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Container(
-        width: width,
-        height: height,
-        margin: const EdgeInsets.symmetric(vertical: 7),
-        padding: const EdgeInsets.symmetric(horizontal: 15),
-        decoration: BoxDecoration(
-          color: backroundColor,
-          borderRadius: BorderRadius.circular(radius),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.5),
-              spreadRadius: 5,
-              blurRadius: 7,
-              offset: const Offset(0, 3), // changes position of shadow
-            ),
-          ],
-        ),
-        child: Center(
-          child: TextFormField(
-            onTap: ontap,
-            autofocus: false,
-            validator: validator,
-            onSaved: onSaved,
-            obscuringCharacter: "*",
-            controller: controller,
-            keyboardType: inputType,
-            textAlign: TextAlign.left,
-            obscureText: false,
-            style: TextStyle(fontFamily: 'secondaryFont', fontSize: fontSize),
-            decoration: InputDecoration(
-              icon: GestureDetector(
-                  onTap: prefixClick,
-                  child: Icon(icon, size: iconSize, color: iconColor)),
-              suffixIcon: GestureDetector(
-                onTap: suffixClick,
-                child: Icon(
-                  suffixIcon,
-                  color: iconColor,
-                  size: iconSize,
-                ),
+    return Container(
+      width: width,
+      height: height,
+      padding: const EdgeInsets.symmetric(horizontal: 15),
+      decoration: BoxDecoration(
+        color: backroundColor,
+        borderRadius: BorderRadius.circular(radius),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.5),
+            spreadRadius: 5,
+            blurRadius: 7,
+            offset: const Offset(0, 3), // changes position of shadow
+          ),
+        ],
+      ),
+      child: Center(
+        child: TextFormField(
+          onTap: ontap,
+          autofocus: false,
+          validator: validator,
+          onSaved: onSaved,
+          obscuringCharacter: "*",
+          controller: controller,
+          keyboardType: inputType,
+          textAlign: TextAlign.left,
+          obscureText: false,
+          style: TextStyle(fontFamily: 'secondaryFont', fontSize: fontSize),
+          decoration: InputDecoration(
+            icon: GestureDetector(
+                onTap: prefixClick,
+                child: Icon(icon, size: iconSize, color: iconColor)),
+            suffixIcon: GestureDetector(
+              onTap: suffixClick,
+              child: Icon(
+                suffixIcon,
+                color: iconColor,
+                size: iconSize,
               ),
-              fillColor: iconColor,
-              hintText: hintText,
-              hintStyle:
-                  TextStyle(fontFamily: 'secondaryFont', fontSize: fontSize),
-              border: InputBorder.none,
             ),
+            fillColor: iconColor,
+            hintText: hintText,
+            hintStyle:
+                TextStyle(fontFamily: 'secondaryFont', fontSize: fontSize),
+            border: InputBorder.none,
           ),
         ),
       ),

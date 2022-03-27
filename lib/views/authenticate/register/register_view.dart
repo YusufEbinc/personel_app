@@ -33,78 +33,71 @@ class _RegisterViewState extends State<RegisterView> {
     final provider = Provider.of<AuthService>(context);
     SizeConfig().init(context);
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          StringConstants.instance.register,
-        ),
-      ),
       body: Center(
-        child: SizedBox(
-          width: SizeConfig.screenWidth,
-          height: SizeConfig.screenHeight,
-          child: Form(
-            key: formKey,
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  const SizedBox(height: 15.0),
-                  Container(
-                    height: SizeConfig.screenHeight * .2,
-                    width: SizeConfig.screenWidth / 2,
-                    decoration: BoxDecoration(
-                        color: whiteColor,
-                        borderRadius: BorderRadius.circular(20)),
-                  ),
-                  const SizedBox(height: 15.0),
-                  RoundedInputField(
-                    controller: emailController,
+        child: Form(
+          key: formKey,
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                CircleAvatar(
+                    backgroundColor: whiteColor,
+                    radius: SizeConfig.screenHeight * .1,
+                    child: Icon(
+                      Icons.person,
+                      color: blackColor,
+                      size: SizeConfig.screenHeight * .1,
+                    )),
+                SizedBox(height: SizeConfig.screenHeight * .1),
+                RoundedInputField(
+                  controller: emailController,
+                  height: SizeConfig.screenHeight * .07,
+                  width: SizeConfig.screenWidth * .83,
+                  radius: 12,
+                  hintText: StringConstants.instance.email,
+                  backroundColor: whiteColor,
+                  prefixClick: () {},
+                  suffixClick: () {},
+                  icon: Icons.email_outlined,
+                  validator: (value) {
+                    if (value!.length < 3 || !value.contains('@')) {
+                      return StringConstants.instance.pleaseEnterValidEmail;
+                    } else {
+                      return null;
+                    }
+                  },
+                ),
+                const SizedBox(height: 15.0),
+                RoundedInputField(
+                    controller: passwordController,
                     height: SizeConfig.screenHeight * .07,
-                    width: SizeConfig.screenWidth * .6,
+                    width: SizeConfig.screenWidth * .83,
                     radius: 12,
-                    hintText: StringConstants.instance.email,
+                    hintText: StringConstants.instance.password,
                     backroundColor: whiteColor,
                     prefixClick: () {},
                     suffixClick: () {},
-                    icon: Icons.email_outlined,
                     validator: (value) {
-                      if (value!.length < 3 || !value.contains('@')) {
-                        return StringConstants.instance.pleaseEnterValidEmail;
+                      if (value!.length < 5) {
+                        return StringConstants
+                            .instance.pleaseEnterValidPassword;
                       } else {
                         return null;
                       }
                     },
-                  ),
-                  const SizedBox(height: 15.0),
-                  RoundedInputField(
-                      controller: passwordController,
-                      height: SizeConfig.screenHeight * .07,
-                      width: SizeConfig.screenWidth * .6,
-                      radius: 12,
-                      hintText: StringConstants.instance.password,
-                      backroundColor: whiteColor,
-                      prefixClick: () {},
-                      suffixClick: () {},
-                      validator: (value) {
-                        if (value!.length < 5) {
-                          return StringConstants
-                              .instance.pleaseEnterValidPassword;
-                        } else {
-                          return null;
-                        }
-                      },
-                      icon: Icons.visibility),
-                  const SizedBox(height: 15),
-                  DefaultButton(
-                    height: SizeConfig.screenHeight * .07,
-                    width: SizeConfig.screenWidth * .6,
-                    buttonColor: blueColor,
-                    radius: 20,
-                    text: StringConstants.instance.register,
-                    buttonTextColor: blackColor,
-                    buttonTextFontSize: 20,
-                    press: () async {
+                    icon: Icons.visibility),
+                const SizedBox(height: 15),
+                DefaultButton(
+                  height: SizeConfig.screenHeight * .05,
+                  width: SizeConfig.screenWidth * .83,
+                  buttonColor: whiteColor,
+                  radius: 20,
+                  text: StringConstants.instance.signup,
+                  buttonTextColor: blackColor,
+                  buttonTextFontSize: 15,
+                  press: () async {
+                    if (formKey.currentState!.validate()) {
                       await provider
                           .createUser(
                               emailController.text, passwordController.text)
@@ -122,23 +115,26 @@ class _RegisterViewState extends State<RegisterView> {
                           }
                         },
                       );
-                    },
-                  ),
-                  const SizedBox(height: 15),
-                  DefaultButton(
-                    height: SizeConfig.screenHeight * .07,
-                    width: SizeConfig.screenWidth * .6,
-                    buttonColor: blueColor,
-                    radius: 20,
-                    text: StringConstants.instance.login,
-                    buttonTextColor: blackColor,
-                    buttonTextFontSize: 20,
-                    press: () {
-                      Navigator.pushNamed(context, LoginView.routeName);
-                    },
-                  ),
-                ],
-              ),
+                    } else {
+                      return debugPrint('error');
+                    }
+                  },
+                ),
+                const SizedBox(height: 15),
+                DefaultButton(
+                  height: SizeConfig.screenHeight * .05,
+                  width: SizeConfig.screenWidth * .83,
+                  buttonColor: whiteColor,
+                  radius: 20,
+                  text: StringConstants.instance.login,
+                  buttonTextColor: blackColor,
+                  buttonTextFontSize: 15,
+                  press: () {
+                    Navigator.pushReplacementNamed(
+                        context, LoginView.routeName);
+                  },
+                ),
+              ],
             ),
           ),
         ),

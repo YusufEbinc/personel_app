@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:personel_app/core/extension/color.dart';
 import 'package:personel_app/core/extension/responsive.dart';
 
 class DefaultButton extends StatelessWidget {
@@ -36,14 +37,16 @@ class DefaultButton extends StatelessWidget {
         onPressed: press,
         child: Text(
           text,
+          style: TextStyle(
+              color: buttonTextColor,
+              fontSize: buttonTextFontSize,
+              fontWeight: FontWeight.bold),
         ),
         style: ElevatedButton.styleFrom(
           primary: buttonColor,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
-          textStyle:
-              TextStyle(color: buttonTextColor, fontSize: buttonTextFontSize),
         ),
       ),
     );

@@ -9,7 +9,7 @@ class UsersData {
   factory UsersData.fromMap(Map<String, dynamic> json) {
     return UsersData(
       expenses: json['expenses'],
-      paymentType: json['paymnet'],
+      paymentType: json['payment'],
       price: json['price'],
       date: DateTime.parse(json['date'].toDate().toString()),
     );
@@ -17,7 +17,7 @@ class UsersData {
 
   Map<String, dynamic> toMap() => {
         'expenses': expenses,
-        'paymnet': paymentType,
+        'payment': paymentType,
         'price': price,
         'date': date
       };

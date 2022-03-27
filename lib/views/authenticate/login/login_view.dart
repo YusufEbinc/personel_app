@@ -32,137 +32,127 @@ class _LoginViewState extends State<LoginView> {
     final provider = Provider.of<AuthService>(context);
     SizeConfig().init(context);
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          StringConstants.instance.login,
-        ),
-      ),
       body: Center(
-        child: SizedBox(
-          width: SizeConfig.screenWidth,
-          height: SizeConfig.screenHeight,
-          child: Form(
-            key: formKey,
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  const SizedBox(height: 15.0),
-                  Container(
-                    height: SizeConfig.screenHeight * .2,
-                    width: SizeConfig.screenWidth / 2,
-                    decoration: BoxDecoration(
-                        color: whiteColor,
-                        borderRadius: BorderRadius.circular(20)),
-                  ),
-                  const SizedBox(height: 15.0),
-                  RoundedInputField(
-                    controller: emailController,
+        child: Form(
+          key: formKey,
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                CircleAvatar(
+                    backgroundColor: whiteColor,
+                    radius: SizeConfig.screenHeight * .1,
+                    child: Icon(
+                      Icons.person,
+                      color: blackColor,
+                      size: SizeConfig.screenHeight * .1,
+                    )),
+                SizedBox(height: SizeConfig.screenHeight * .1),
+                RoundedInputField(
+                  controller: emailController,
+                  height: SizeConfig.screenHeight * .07,
+                  width: SizeConfig.screenWidth * .83,
+                  radius: 12,
+                  hintText: StringConstants.instance.email,
+                  backroundColor: whiteColor,
+                  prefixClick: () {},
+                  suffixClick: () {},
+                  icon: Icons.email_outlined,
+                  validator: (value) {
+                    if (value!.length < 3 || !value.contains('@')) {
+                      return StringConstants.instance.pleaseEnterValidEmail;
+                    } else {
+                      return null;
+                    }
+                  },
+                ),
+                const SizedBox(height: 15.0),
+                RoundedInputField(
+                    controller: passwordController,
                     height: SizeConfig.screenHeight * .07,
-                    width: SizeConfig.screenWidth * .6,
+                    width: SizeConfig.screenWidth * .83,
                     radius: 12,
-                    hintText: StringConstants.instance.email,
+                    hintText: StringConstants.instance.password,
                     backroundColor: whiteColor,
                     prefixClick: () {},
                     suffixClick: () {},
-                    icon: Icons.email_outlined,
                     validator: (value) {
-                      if (value!.length < 3 || !value.contains('@')) {
-                        return StringConstants.instance.pleaseEnterValidEmail;
+                      if (value!.length < 5) {
+                        return StringConstants
+                            .instance.pleaseEnterValidPassword;
                       } else {
                         return null;
                       }
                     },
-                  ),
-                  const SizedBox(height: 15.0),
-                  RoundedInputField(
-                      controller: passwordController,
-                      height: SizeConfig.screenHeight * .07,
-                      width: SizeConfig.screenWidth * .6,
-                      radius: 12,
-                      hintText: StringConstants.instance.password,
-                      backroundColor: whiteColor,
-                      prefixClick: () {},
-                      suffixClick: () {},
-                      validator: (value) {
-                        if (value!.length < 5) {
-                          return StringConstants
-                              .instance.pleaseEnterValidPassword;
-                        } else {
-                          return null;
-                        }
-                      },
-                      icon: Icons.visibility),
-                  const SizedBox(height: 15.0),
-                  DefaultButton(
-                    height: SizeConfig.screenHeight * .07,
-                    width: SizeConfig.screenWidth * .6,
-                    buttonColor: blueColor,
-                    radius: 20,
-                    text: StringConstants.instance.login,
-                    buttonTextColor: blackColor,
-                    buttonTextFontSize: 20,
-                    press: () async {
-                      if (formKey.currentState!.validate()) {
-                        formKey.currentState!.save();
-
-                        await provider
-                            .signInUser(
-                                emailController.text, passwordController.text)
-                            .then(
-                          (value) {
-                            if (value?.uid != null) {
+                    icon: Icons.visibility),
+                const SizedBox(height: 30.0),
+                DefaultButton(
+                  height: SizeConfig.screenHeight * .05,
+                  width: SizeConfig.screenWidth * .83,
+                  buttonColor: whiteColor,
+                  radius: 20,
+                  text: StringConstants.instance.signin,
+                  buttonTextColor: blackColor,
+                  buttonTextFontSize: 15,
+                  press: () async {
+                    if (formKey.currentState!.validate()) {
+                      await provider
+                          .signInUser(
+                              emailController.text, passwordController.text)
+                          .then(
+                        (value) {
+                          if (value?.uid != null) {
+                            Navigator.pushReplacementNamed(
+                                context, BottomNavigationView.routeName);
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(provider.error),
+                              ),
+                            );
+                          }
+                        },
+                      );
+                    } else {
+                      return debugPrint('error');
+                    }
+                  },
+                ),
+                const SizedBox(height: 15),
+                DefaultButton(
+                  height: SizeConfig.screenHeight * .05,
+                  width: SizeConfig.screenWidth * .83,
+                  buttonColor: whiteColor,
+                  radius: 15,
+                  text: StringConstants.instance.register,
+                  buttonTextColor: blackColor,
+                  buttonTextFontSize: 15,
+                  press: () {
+                    Navigator.pushReplacementNamed(
+                        context, RegisterView.routeName);
+                  },
+                ),
+                const SizedBox(height: 15),
+                DefaultButton(
+                  height: SizeConfig.screenHeight * .05,
+                  width: SizeConfig.screenWidth * .83,
+                  buttonColor: whiteColor,
+                  radius: 20,
+                  text: StringConstants.instance.withGoogle,
+                  buttonTextColor: blackColor,
+                  buttonTextFontSize: 15,
+                  press: () {
+                    provider.signInWithGoogle().then((value) => {
+                          if (value?.user?.emailVerified == true)
+                            {
                               Navigator.pushReplacementNamed(
-                                  context, BottomNavigationView.routeName);
-                            } else {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text(provider.error),
-                                ),
-                              );
+                                  context, BottomNavigationView.routeName)
                             }
-                          },
-                        );
-                      } else {
-                        return debugPrint('erorrr');
-                      }
-                    },
-                  ),
-                  const SizedBox(height: 15),
-                  DefaultButton(
-                    height: SizeConfig.screenHeight * .07,
-                    width: SizeConfig.screenWidth * .6,
-                    buttonColor: blueColor,
-                    radius: 20,
-                    text: StringConstants.instance.register,
-                    buttonTextColor: blackColor,
-                    buttonTextFontSize: 20,
-                    press: () {
-                      Navigator.pushNamed(context, RegisterView.routeName);
-                    },
-                  ),
-                  const SizedBox(height: 15),
-                  DefaultButton(
-                    height: SizeConfig.screenHeight * .07,
-                    width: SizeConfig.screenWidth * .6,
-                    buttonColor: blueColor,
-                    radius: 20,
-                    text: 'Google ile giriş',
-                    buttonTextColor: whiteColor,
-                    buttonTextFontSize: 20,
-                    press: () {
-                      provider.signInWithGoogle().then((value) => {
-                            if (value.user?.emailVerified == true)
-                              {
-                                Navigator.pushReplacementNamed(
-                                    context, BottomNavigationView.routeName)
-                              }
-                          });
-                    },
-                  ),
-                ],
-              ),
+                        });
+                  },
+                ),
+              ],
             ),
           ),
         ),
@@ -170,3 +160,18 @@ class _LoginViewState extends State<LoginView> {
     );
   }
 }
+
+/* 
+Container(
+                  height: SizeConfig.screenHeight * .23,
+                  decoration: const BoxDecoration(
+                    color: whiteColor,
+                    shape: BoxShape.circle,
+                    image: DecorationImage(
+                      scale: .1,
+                      image: AssetImage(
+                        'assets/images/person.png',
+                      ),
+                    ),
+                  ),
+                ), */
