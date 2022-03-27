@@ -23,13 +23,14 @@ class _SettingsViewState extends State<SettingsView> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Center(child: Text(StringConstants.instance.settings)),
-          ElevatedButton(
-              onPressed: () {
-                provider.signOut();
-                Navigator.pushReplacementNamed(context, LoginView.routeName);
-              },
-              child: const Text('sign out')),
+          Center(
+            child: ElevatedButton(
+                onPressed: () {
+                  provider.signOut();
+                  Navigator.pushReplacementNamed(context, LoginView.routeName);
+                },
+                child: const Text('sign out')),
+          ),
         ],
       ),
     );

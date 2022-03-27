@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class RoundedInputField extends StatelessWidget {
   final Color? iconColor;
+
   final Color backroundColor;
   final Color? fillColor;
   final double? width;
@@ -76,7 +77,7 @@ class RoundedInputField extends StatelessWidget {
           controller: controller,
           keyboardType: inputType,
           textAlign: TextAlign.left,
-          obscureText: false,
+          obscureText: obscureText,
           style: TextStyle(fontFamily: 'secondaryFont', fontSize: fontSize),
           decoration: InputDecoration(
             icon: GestureDetector(

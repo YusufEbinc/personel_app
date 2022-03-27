@@ -37,17 +37,6 @@ class UserProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  /*  void delete(var id) async {
-    list.remove(id);
-
-    print(list[1].toString());
-    /* await _firebaseFirestore
-        .collection(_auth.currentUser!.email!)
-        .doc(id.toString())
-        .delete(); */
-    notifyListeners();
-  } */
-
   void radioButtonOntap(int? index, BuildContext context) {
     if (index == 1) {
       list.sort((b, a) => a.date!.compareTo(b.date!));

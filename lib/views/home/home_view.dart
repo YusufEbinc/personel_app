@@ -95,6 +95,9 @@ class _HomeViewState extends State<HomeView> {
                                 }
                               },
                             ),
+                            const SizedBox(
+                              height: 15,
+                            ),
                             RoundedInputField(
                               height: SizeConfig.screenHeight * .07,
                               controller: paymenttypeController,
@@ -111,6 +114,9 @@ class _HomeViewState extends State<HomeView> {
                                 }
                               },
                             ),
+                            const SizedBox(
+                              height: 15,
+                            ),
                             RoundedInputField(
                               controller: priceController,
                               radius: 12,
@@ -126,6 +132,9 @@ class _HomeViewState extends State<HomeView> {
                                   return null;
                                 }
                               },
+                            ),
+                            const SizedBox(
+                              height: 15,
                             ),
                             RoundedInputField(
                               icon: Icons.calendar_today,

@@ -24,6 +24,8 @@ class AuthService {
     try {
       UserCredential userCredential = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
+
+      print(userCredential.user?.uid);
       return _userFirebase(userCredential.user);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
@@ -38,7 +40,13 @@ class AuthService {
     try {
       UserCredential userCredential = await _auth
           .createUserWithEmailAndPassword(email: email, password: password);
-
+      _firebaseFirestore
+          .collection('users')
+          .doc(userCredential.user?.email)
+          .set({
+        'email': userCredential.user?.email,
+        'uid': userCredential.user?.uid
+      });
       return _userFirebase(userCredential.user);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {

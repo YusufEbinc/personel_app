@@ -69,6 +69,7 @@ class _LoginViewState extends State<LoginView> {
                 ),
                 const SizedBox(height: 15.0),
                 RoundedInputField(
+                    obscureText: true,
                     controller: passwordController,
                     height: SizeConfig.screenHeight * .07,
                     width: SizeConfig.screenWidth * .83,

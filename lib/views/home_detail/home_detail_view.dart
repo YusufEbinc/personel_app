@@ -92,11 +92,6 @@ class HomeDetailView extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                              /*  IconButton(
-                                  onPressed: () {
-                                    provider.delete(provider.list[index]);
-                                  },
-                                  icon: const Icon(Icons.delete)) */
                             ],
                           ),
                         ),
