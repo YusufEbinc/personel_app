@@ -1,9 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:personel_app/model/user_model.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
   String error = '';
 
   UserModel? _userFirebase(User? user) {
@@ -43,13 +46,38 @@ class AuthService {
       } else if (e.code == 'email-already-in-use') {
         error = 'The account already exists for that email.';
       }
-    } catch (e) {
-      debugPrint(e.toString());
+      throw Exception();
     }
   }
 
-  Future<bool?> signOut() async {
+  Future<UserCredential> signInWithGoogle() async {
     try {
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+      final GoogleSignInAuthentication? googleAuth =
+          await googleUser?.authentication;
+
+      final userCredential = GoogleAuthProvider.credential(
+        accessToken: googleAuth?.accessToken,
+        idToken: googleAuth?.idToken,
+      );
+      await _firebaseFirestore
+          .collection('users')
+          .doc(userCredential.accessToken)
+          .set({
+        'email': userCredential.accessToken,
+        'uid': userCredential.idToken
+      });
+      return await FirebaseAuth.instance.signInWithCredential(userCredential);
+    } on FirebaseAuthException catch (e) {
+      debugPrint(e.toString());
+      throw Exception();
+    }
+  }
+
+  Future<void> signOut() async {
+    try {
+      await GoogleSignIn().signOut();
       await _auth.signOut();
     } catch (e) {
       debugPrint('eror: $e');

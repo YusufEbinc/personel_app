@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:personel_app/core/extension/custom_thema.dart';
 import 'package:personel_app/core/extension/route.dart';
 import 'package:personel_app/services/authenticate_service.dart';
-import 'package:personel_app/views/user_provider.dart';
 import 'package:personel_app/views/authenticate/splash/splas_view.dart';
 import 'package:provider/provider.dart';
 
@@ -21,9 +20,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider<UserProvider>(
-          create: (context) => UserProvider(),
-        ),
         Provider<AuthService>(
           create: ((context) => AuthService()),
         ),

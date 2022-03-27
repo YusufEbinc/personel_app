@@ -14,14 +14,14 @@ class BottomNavigationView extends StatefulWidget {
 }
 
 class _BottomNavigationViewState extends State<BottomNavigationView> {
-  List page = [
-    const HomeView(),
-    const HomeDetailView(),
-    const SettingsView(),
-  ];
   int selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
+    List page = [
+      const HomeView(),
+      const HomeDetailView(),
+      const SettingsView(),
+    ];
     return Scaffold(
         body: page.elementAt(selectedIndex),
         bottomNavigationBar: BottomAppBar(

@@ -14,7 +14,6 @@ class SettingsView extends StatefulWidget {
 class _SettingsViewState extends State<SettingsView> {
   @override
   Widget build(BuildContext context) {
-    late int? index = 0;
     final provider = Provider.of<AuthService>(context);
     return Scaffold(
       appBar: AppBar(

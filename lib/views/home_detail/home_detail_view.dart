@@ -2,33 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:personel_app/core/extension/color.dart';
 import 'package:personel_app/core/extension/string_constant.dart';
-
 import 'package:personel_app/views/user_provider.dart';
 import 'package:provider/provider.dart';
 
-class HomeDetailView extends StatefulWidget {
+class HomeDetailView extends StatelessWidget {
+  static String routeName = StringConstants.instance.homeDetailView;
   const HomeDetailView({Key? key}) : super(key: key);
 
   @override
-  State<HomeDetailView> createState() => _HomeDetailViewState();
-}
-
-class _HomeDetailViewState extends State<HomeDetailView> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return Consumer<UserProvider>(
-      builder: (context, provider, child) => Scaffold(
+    UserProvider userProvider = UserProvider();
+    return ChangeNotifierProvider<UserProvider>.value(
+      value: userProvider,
+      child: Consumer<UserProvider>(
+        builder: (context, provider, child) => Scaffold(
           appBar: AppBar(
             title: Text(StringConstants.instance.homeDetail),
             actions: [
               IconButton(
                   onPressed: () {
-                    _showDialog(provider);
+                    _showDialog(provider, context);
                   },
                   icon: const Icon(Icons.expand_more))
             ],
@@ -37,27 +30,75 @@ class _HomeDetailViewState extends State<HomeDetailView> {
             itemCount: provider.list.length,
             itemBuilder: (context, index) {
               return Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(10),
                 child: Container(
-                    decoration: BoxDecoration(
-                        color: whiteColor,
-                        borderRadius: BorderRadius.circular(13)),
-                    child: Column(
+                  padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                      color: whiteColor,
+                      borderRadius: BorderRadius.circular(13)),
+                  child: ListTile(
+                    leading: CircleAvatar(
+                        backgroundColor: scafoldbackclr,
+                        child: Text(
+                          (index + 1).toString(),
+                          style: const TextStyle(color: whiteColor),
+                        )),
+                    title: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(provider.list[index].price.toString()),
-                        Text(provider.list[index].expenses.toString()),
-                        Text(provider.list[index].paymentType.toString()),
-                        Text(DateFormat('yyyy-MM-dd')
-                            .format(provider.list[index].date!)),
+                        Padding(
+                          padding: const EdgeInsets.all(4.0),
+                          child: Text(
+                            ' Price: ' + provider.list[index].price.toString(),
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(4.0),
+                          child: Text(
+                            ' Expenses: ' +
+                                provider.list[index].expenses.toString(),
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(4.0),
+                          child: Text(
+                            ' Payment : ' +
+                                provider.list[index].paymentType.toString(),
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(4.0),
+                          child: Text(
+                            ' Price: ' +
+                                DateFormat('yyyy-MM-dd')
+                                    .format(provider.list[index].date!),
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
                       ],
-                    )),
+                    ),
+                  ),
+                ),
               );
             },
-          )),
+          ),
+        ),
+      ),
     );
   }
 
-  _showDialog(UserProvider provider) {
+  _showDialog(UserProvider provider, BuildContext context) {
     showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -66,9 +107,11 @@ class _HomeDetailViewState extends State<HomeDetailView> {
               Column(
                 children: [
                   ListTile(
-                    title: Text(
+                    title: const Text(
                       'Time',
-                      style: Theme.of(context).textTheme.bodyText1,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     leading: Radio<int?>(
                       value: 1,
@@ -79,9 +122,11 @@ class _HomeDetailViewState extends State<HomeDetailView> {
                     ),
                   ),
                   ListTile(
-                    title: Text(
+                    title: const Text(
                       'Lowest',
-                      style: Theme.of(context).textTheme.bodyText1,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     leading: Radio<int?>(
                       value: 2,
@@ -92,9 +137,11 @@ class _HomeDetailViewState extends State<HomeDetailView> {
                     ),
                   ),
                   ListTile(
-                    title: Text(
+                    title: const Text(
                       'Highest',
-                      style: Theme.of(context).textTheme.bodyText1,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     leading: Radio<int?>(
                       value: 3,
@@ -111,3 +158,115 @@ class _HomeDetailViewState extends State<HomeDetailView> {
         });
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+
+
+ChangeNotifierProvider<UserProvider>.value(
+       
+      value: userProvider,
+      child: Consumer<UserProvider>(
+        builder: (context, provider, child) => Scaffold(
+            appBar: AppBar(
+              title: Text(StringConstants.instance.homeDetail),
+              actions: [
+                IconButton(
+                    onPressed: () {
+                      _showDialog(provider);
+                    },
+                    icon: const Icon(Icons.expand_more))
+              ],
+            ),
+            body: ListView.builder(
+              itemCount: provider.list.length,
+              itemBuilder: (context, index) {
+                return Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Container(
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                        color: whiteColor,
+                        borderRadius: BorderRadius.circular(13)),
+                    child: ListTile(
+                      leading: CircleAvatar(
+                          backgroundColor: scafoldbackclr,
+                          child: Text(
+                            (index + 1).toString(),
+                            style: const TextStyle(color: whiteColor),
+                          )),
+                      title: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(4.0),
+                            child: Text(
+                              ' Price: ' +
+                                  provider.list[index].price.toString(),
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(4.0),
+                            child: Text(
+                              ' Expenses: ' +
+                                  provider.list[index].expenses.toString(),
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(4.0),
+                            child: Text(
+                              ' Payment : ' +
+                                  provider.list[index].paymentType.toString(),
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(4.0),
+                            child: Text(
+                              ' Price: ' +
+                                  DateFormat('yyyy-MM-dd')
+                                      .format(provider.list[index].date!),
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                );
+              },
+            ),
+            ),
+      ),
+    );*/
+  
+

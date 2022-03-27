@@ -4,7 +4,6 @@ import 'package:personel_app/core/constants/text_form_field/raunded_input_field.
 import 'package:personel_app/core/extension/color.dart';
 import 'package:personel_app/core/extension/responsive.dart';
 import 'package:personel_app/core/extension/string_constant.dart';
-import 'package:personel_app/model/user_model.dart';
 import 'package:personel_app/services/authenticate_service.dart';
 import 'package:personel_app/views/authenticate/login/login_view.dart';
 import 'package:personel_app/views/bottom_navigaton_bar/bottom_navigation_bar.dart';

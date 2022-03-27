@@ -5,6 +5,7 @@ class StringConstants {
   StringConstants._();
 
   String bottomNavigationView = '/bottomNavigationView';
+  String homeDetailView = '/homeDetailView';
   String loginView = '/LoginView';
   String splasView = '/splashView';
   String homeView = '/homeView';
